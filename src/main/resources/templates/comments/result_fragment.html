@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="commentList" th:unless="${#lists.isEmpty(comments)}" id="results-block">
+    <p class="h6">Comments:</p>
+    <br>
+    <div class="row form-group mx-2 justify-content-between" th:each="comment : ${comments}">
+        <div class="col">
+            <p class="h6" th:text="${comment.getUser().getUsername()}">Username</p>
+            <p class="text-just" th:text="${comment.getText()}">Text</p>
+        </div>
+        <div th:if="${(auth_user != null)&&((role == 'ROLE_ADMIN')||(auth_user.getUsername() == comment.getUser().getUsername()))}" class="col-auto">
+            <form th:method="DELETE" th:action="@{/comment/{id}(id=${comment.getId()})}">
+                <input type="hidden" name="item_id" th:value="${item_id}"/>
+                <button type="submit" class="butcust fa fa-light fa-trash fa-sm"></button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

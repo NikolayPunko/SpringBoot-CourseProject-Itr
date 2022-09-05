@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="likeList" id="results-block">
+
+    <div class="row form-group mx-1">
+        <p class="h6 align-self-center" th:text="'Likes: '+${likes.size()}">Username</p>
+
+        <th:block th:if="${auth_user != null}">
+            <form class="align-self-center" th:if="${likes.contains(auth_user)}" th:method="PATCH" th:action="@{/like/dislike/{id}(id=${item_id})}">
+                <input type="hidden" name="user_id" th:value="${auth_user.getId()}"/>
+                <button type="submit" class="butcust fa fa-solid fa-heart fa-lg"></button>
+            </form>
+
+            <form class="align-self-center" th:unless="${likes.contains(auth_user)}" th:method="PATCH" th:action="@{/like/like/{id}(id=${item_id})}">
+                <input type="hidden" name="user_id" th:value="${auth_user.getId()}"/>
+                <button type="submit" class="butcust fa fa-regular fa-heart fa-lg"></button>
+            </form>
+        </th:block>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>

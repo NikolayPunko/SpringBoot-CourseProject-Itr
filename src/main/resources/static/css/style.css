@@ -1,0 +1,52 @@
+
+.elwhite {
+    color: white;
+}
+
+.text {
+    color: #000 !important;
+    text-decoration: none
+}
+
+.td-img {
+    width: 30%;
+}
+
+.img {
+    width: 70%;
+}
+
+.img-col {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.butcust {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    background-color: #fff;
+    border-width: 0;
+    border: none;
+}
+
+.text-just{
+    text-align: justify;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+    margin-top: 10%;
+}
+
+.form-control:focus {
+    border-color: white;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 0, 0, 0.31);
+}

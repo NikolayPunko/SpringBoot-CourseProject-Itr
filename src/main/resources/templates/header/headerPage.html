@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div th:fragment="header" class="fixed-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-primary">
+        <a class="navbar-brand mx-1" href="#">Collectors</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="container-fluid">
+
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/collection">Collections</a>
+                    </li>
+                </ul>
+
+                <form method="get" action="/search" class="form-inline mx-4">
+                    <div class="input-group">
+                        <input id="search-input" type="text" class="form-control" placeholder="Search" name="text" th:value="${text}">
+                        <button class="btn btn-outline-secondary" type="submit" >Search</button>
+                    </div>
+                </form>
+
+
+                <div class="row pr-5" style="justify-content: flex-end">
+                    <div class="row-pr-5" th:if="${auth_user} != null">
+
+                        <div class="dropdown">
+                            <input class="btn btn-link dropdown-toggle elwhite" th:value="${auth_user.getUsername()}"
+                                   type="button" id="dropdownMenuButton"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" th:href="@{/collection(user_id=${auth_user.getId()})}">My collections</a>
+                                <a class="dropdown-item"th:if="${role == 'ROLE_ADMIN'}" href="/admin">Admin panel</a>
+                                <div class="dropdown-divider"></div>
+                                <form th:method="POST" th:action="@{/logout}">
+                                    <button class="dropdown-item">Sign out</button>
+                                </form>
+                            </div>
+
+                            <i class="fa fa-light fa-user-check fa-lg elwhite"></i>
+                        </div>
+
+                    </div>
+                    <div class="row-pr-5" th:if="${auth_user} == null">
+
+                        <a href="/auth/login">
+                            <button class="btn btn-link elwhite">Sign in</button>
+                            <i class="fa fa-light fa-user-large-slash fa-lg elwhite"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </nav>
+
+</div>
+
+<script>
+
+</script>
+
+</body>
+</html>

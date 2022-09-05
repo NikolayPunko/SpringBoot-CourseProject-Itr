@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="searchList" id="results-block">
+
+
+    <table class="table text-nowrap">
+        <thead>
+        <tr>
+
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Collection</th>
+            <th scope="col">Owner</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}"
+            th:onclick="document.location.href = '/item/show/'+[[${item.getId()}]];">
+
+            <td th:text="${item.getId()}">#</td>
+            <td th:text="${item.getName()}">#</td>
+
+            <td th:text="${item.getOwner.getName()}">#</td>
+            <td th:text="${item.getOwner.getOwner.getUsername()}">#</td>
+            <td>
+                <small th:text="${item.getLikes().size()}"></small>
+                <i class="fa fa-solid fa-heart"></i>
+            </td>
+
+            <td>
+                <small th:text="${item.getComments().size()}"></small>
+                <i class="fa fa-solid fa-comment"></i>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

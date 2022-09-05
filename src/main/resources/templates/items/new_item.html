@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css"/>
+    <script src="https://kit.fontawesome.com/bb8c7ea70f.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../js/new_edit_item.js"></script>
+    <title>Create</title>
+</head>
+<body>
+<header th:insert="header/headerPage.html :: header"></header>
+
+<div class="container" style="margin-top: 80px">
+    <h3>Create a collection item</h3>
+    <br>
+
+    <form class="needs-validation" id="form" th:method="POST" th:action="@{/item/create}" th:object="${item}"
+          novalidate>
+
+        <div class="row">
+
+            <div class="col">
+
+                <input type="hidden" th:field="*{owner}" th:value="${item.getOwner()}"/>
+                <input type="hidden" name="collection_id" th:value="${item.getOwner().getId()}"/>
+                <input type="hidden" name="user_id" th:value="${user_id}"/>
+
+                <div class="form-group">
+                    <label class="form-label">Element name</label>
+                    <input type="text" class="form-control" th:field="*{name}" placeholder="Name" minlength="2"
+                           maxlength="50" required>
+                    <div class="invalid-feedback">
+                        Name must be between 2 and 50 characters!
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-group" id="dupl_0">
+                        <label>Tags</label>
+                        <input type="text" id="inp_0" class="form-control" name="tagNames" placeholder="Tags"
+                               minlength="2" maxlength="50" required>
+                        <div class="invalid-feedback">
+                            The tag name must be between 2 and 50 characters!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="duplicate_tag()">Add field for tag</button>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="delete_tag()" id="btn-remove" style="display: none">Delete field for tag</button>
+                    </div>
+                </div>
+
+
+                <div th:if="${fields[0]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameFirstNumericField()}"/>
+                    <input type="number" class="form-control" th:field="*{firstNumericField}" placeholder="Name" min="0"
+                           max="2147483647" required>
+                    <div class="invalid-feedback">
+                        The numeric field must be between 0 and 2147483647!
+                    </div>
+                </div>
+
+                <div th:if="${fields[1]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameSecondNumericField()}"/>
+                    <input type="number" class="form-control" th:field="*{secondNumericField}" placeholder="Name"
+                           min="0" max="2147483647" required>
+                    <div class="invalid-feedback">
+                        The numeric field must be between 0 and 2147483647!
+                    </div>
+                </div>
+
+                <div th:if="${fields[2]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameThirdNumericField()}"/>
+                    <input type="number" class="form-control" th:field="*{thirdNumericField}" placeholder="Name" min="0"
+                           max="2147483647" required>
+                    <div class="invalid-feedback">
+                        The numeric field must be between 0 and 2147483647!
+                    </div>
+                </div>
+
+                <div th:if="${fields[3]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameFirstStringField()}"/>
+                    <input type="text" class="form-control" th:field="*{firstStringField}" placeholder="Name"
+                           minlength="2" maxlength="50" required>
+                    <div class="invalid-feedback">
+                        The string field must be between 2 and 50 characters!
+                    </div>
+                </div>
+
+                <div th:if="${fields[4]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameSecondStringField()}"/>
+                    <input type="text" class="form-control" th:field="*{secondStringField}" placeholder="Name"
+                           minlength="2" maxlength="50" required>
+                    <div class="invalid-feedback">
+                        The string field must be between 2 and 50 characters!
+                    </div>
+                </div>
+
+                <div th:if="${fields[5]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameThirdStringField()}"/>
+                    <input type="text" class="form-control" th:field="*{thirdStringField}" placeholder="Name"
+                           minlength="2" maxlength="50" required>
+                    <div class="invalid-feedback">
+                        The string field must be between 2 and 50 characters!
+                    </div>
+                </div>
+
+                <div th:if="${fields[6]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameFirstTextField()}"/>
+                    <textarea type="text" class="form-control" th:field="*{firstTextField}" rows="4"
+                              placeholder="Description"
+                              autocomplete="off" minlength="10" maxlength="1000" required></textarea>
+                    <div class="invalid-feedback">
+                        The text field must be between 10 and 1000 characters!
+                    </div>
+                </div>
+
+                <div th:if="${fields[7]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameSecondTextField()}"/>
+                    <textarea type="text" class="form-control" th:field="*{SecondTextField}" rows="4"
+                              placeholder="Description"
+                              autocomplete="off" minlength="10" maxlength="1000" required></textarea>
+                    <div class="invalid-feedback">
+                        The text field must be between 10 and 1000 characters!
+                    </div>
+                </div>
+
+                <div th:if="${fields[8]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameThirdTextField()}"/>
+                    <textarea type="text" class="form-control" th:field="*{thirdTextField}" rows="4"
+                              placeholder="Description"
+                              autocomplete="off" minlength="10" maxlength="1000" required></textarea>
+                    <div class="invalid-feedback">
+                        The text field must be between 10 and 1000 characters!
+                    </div>
+                </div>
+
+                <div th:if="${fields[12]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameFirstDateField()}"/>
+                    <input type="date" class="form-control" th:field="*{firstDateField}" placeholder="Name" required>
+                    <div class="invalid-feedback">
+                        The date field must not be empty!
+                    </div>
+                </div>
+
+                <div th:if="${fields[13]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameSecondDateField()}"/>
+                    <input type="date" class="form-control" th:field="*{secondDateField}" placeholder="Name" required>
+                    <div class="invalid-feedback">
+                        The date field must not be empty!
+                    </div>
+                </div>
+
+                <div th:if="${fields[14]!=0}" class="form-group">
+                    <label th:text="${item.getOwner().getNameThirdDateField()}"/>
+                    <input type="date" class="form-control" th:field="*{thirdDateField}" placeholder="Name" required>
+                    <div class="invalid-feedback">
+                        The date field must not be empty!
+                    </div>
+                </div>
+
+                <div th:if="${fields[9]!=0}" class="form-group">
+                    <div class="row">
+                        <div class="col-auto">
+                            <label th:text="${item.getOwner().getNameFirstBooleanField()}"/>
+                        </div>
+                        <div class="col">
+                            <input class="form-check-input" type="checkbox" th:field="*{firstBooleanField}">
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${fields[10]!=0}" class="form-group">
+                    <div class="row">
+                        <div class="col-auto">
+                            <label th:text="${item.getOwner().getNameSecondBooleanField()}"/>
+                        </div>
+                        <div class="col">
+                            <input class="form-check-input" type="checkbox" th:field="*{secondBooleanField}">
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${fields[11]!=0}" class="form-group">
+                    <div class="row">
+                        <div class="col-auto">
+                            <label th:text="${item.getOwner().getNameThirdBooleanField()}"/>
+                        </div>
+                        <div class="col">
+                            <input class="form-check-input" type="checkbox" th:field="*{thirdBooleanField}">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <button form="form" type="submit" class="btn btn-secondary">Create item</button>
+        </div>
+    </form>
+
+</div>
+
+<script>
+
+    window.onload = function () {
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(
+                function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+    };
+
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+
+
+</body>
+</html>
